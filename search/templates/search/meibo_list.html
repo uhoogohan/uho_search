@@ -1,0 +1,53 @@
+{% extends 'search/base.html' %}
+{% load widget_tweaks %}
+{% block content %}
+<div style="margin: 1em;">
+  <div style="margin:0em 0em 1em 0em;">
+    <form class="form-inline" method="GET">
+      {%for form in search_form%}
+        {{form|add_class:"form-control mr-sm-2 w-25 bg-transparent text-white"}}
+        <button type="submit" class="btn btn-outline-success my-2 my-sm-0">探す</button>
+      {%endfor%}
+    </form>
+  </div>
+  <table class="table bg-transparent text-white table-hover table-striped table-bordered">
+    {% for r in meibo_list %}
+      <tr>
+        <td>{{r.simei}}</td>
+        <td>{{r.simei_kana}}</td>
+        <td>{{r.seibetu}}</td>
+        <td>{{r.blood_gata}}</td>
+        <td>{{r.tanjo_bi}}</td>
+        <td>{{r.chiiki}}</td>
+        <td>{{r.phone_bango}}</td>
+      </tr>
+      {% endfor %}
+      </div>
+  </table>
+  {% load extras %}
+  {% if page_obj.paginator.num_pages > 1 %}
+    <ul class="pagination">
+      <li class="page-item {% if not page_obj.has_previous %}disabled{% endif %}">
+        <a class="page-link" href="?{% page_link page_obj.previous_page_number %}" aria-label="前へ">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+      {% for page_num in page_obj.paginator.page_range %} 
+        <li class="page-item {% if page_num == page_obj.number %}active{% endif %}">
+          <a class="page-link" href="?{% page_link page_num %}">{{ page_num }}</a>
+        </li>
+      {% endfor %}
+      <li class="page-item {% if not page_obj.has_next %}disabled{% endif %}">
+        <a class="page-link" href="?{% page_link page_obj.next_page_number %}" aria-label="次へ">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+    </ul>
+  {% endif %}
+</div>
+<script type="text/javascript">
+  var txt = document.getElementById('id_keywords');
+  var len = txt.value.length; txt.focus();
+  txt.setSelectionRange(len, len);
+</script>
+{% endblock %}
