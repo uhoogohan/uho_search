@@ -1,6 +1,5 @@
 .vscode/
 venv/
-db.sqlite3
 dummy.cgi
 __pycache__
 local_settings.py
